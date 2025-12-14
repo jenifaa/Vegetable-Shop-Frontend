@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "/NextLevel/shop/shop-frontend/src/assets/icons/Logo2.png";
+import { Link } from "react-router";
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -15,7 +16,7 @@ const Navbar = () => {
             <span>Language ~</span>
             <span>Currency ~</span>
           </div>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <a href="#" className="hover:text-green-400">
               Track Your Order
             </a>
@@ -23,11 +24,12 @@ const Navbar = () => {
               Newskiller
             </a>
             <a href="#" className="hover:text-green-400">
-              Contact Us
-            </a>
-            <a href="#" className="hover:text-green-400">
               Facts
             </a>
+            <Link to="/login" className="hover:text-green-400 font-semibold  border-b-4 rounded-md px-4 py-1 bg-green-600">
+             Login
+            </Link>
+            
           </div>
         </div>
       </div>

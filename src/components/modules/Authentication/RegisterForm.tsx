@@ -14,9 +14,10 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Password from "@/components/ui/Password";
-import { useRegisterMutation } from "@/redux/features/auth/auth.api";
+
 import { toast } from "sonner";
+import { PasswordInput } from "@/hooks/PasswordInput";
+import { useRegisterMutation } from "@/redux/features/auth.api";
 
 const registerSchema = z
   .object({
@@ -74,8 +75,8 @@ export function RegisterForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-2xl font-bold">Register your account</h1>
-        <p className="text-sm text-muted-foreground">
+       
+        <p className="text-lg text-white font-bold">
           Enter your details to create an account
         </p>
       </div>
@@ -126,7 +127,7 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Password {...field} />
+                    <PasswordInput {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -142,7 +143,7 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <Password {...field} />
+                    <PasswordInput {...field} />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
