@@ -1,188 +1,258 @@
-import Logo from "@/assets/icons/logo";
+import { Link } from 'react-router';
+import Facebook from "@/assets/icons/facebook.png"
+import Twitter from "@/assets/icons/twitter.png"  
+import Insta from "@/assets/icons/instagram.png"
+import Youtube from "@/assets/icons/youtube.png"
+import { 
+  Heart,
+  Truck,
+  Sprout,
+  Phone,
+  Mail,
+  MapPin
+} from 'lucide-react';
+import type { FC, ReactNode } from 'react';
 
-function Footer() {
+interface SocialLink {
+  name: string;
+  icon: ReactNode;
+  url: string;
+}
+
+interface FooterLink {
+  label: string;
+  to: string;
+}
+
+const Footer: FC = () => {
+  const socialLinks: SocialLink[] = [
+    { 
+      name: 'Facebook', 
+      icon: <img src={Facebook} alt="Facebook" className="w-5 h-5" />, 
+      url: 'https://facebook.com' 
+    },
+    { 
+      name: 'Instagram', 
+      icon: <img src={Insta} alt="Instagram" className="w-5 h-5" />, 
+      url: 'https://instagram.com' 
+    },
+    { 
+      name: 'Twitter', 
+      icon: <img src={Twitter} alt="Twitter" className="w-5 h-5" />, 
+      url: 'https://twitter.com' 
+    },
+    { 
+      name: 'YouTube', 
+      icon: <img src={Youtube} alt="YouTube" className="w-5 h-5" />, 
+      url: 'https://youtube.com' 
+    },
+  ];
+
+  const quickLinks: FooterLink[] = [
+    { label: 'Shop Vegetables', to: '/vegetables' },
+    { label: 'Organic Spices', to: '/spices' },
+    { label: 'Recipes', to: '/recipes' },
+    { label: 'Seasonal Specials', to: '/seasonal' },
+  ];
+
+  const companyLinks: FooterLink[] = [
+    { label: 'About Us', to: '/about' },
+    { label: 'Contact', to: '/contact' },
+    { label: 'Delivery Info', to: '/delivery' },
+    { label: 'Privacy Policy', to: '/privacy' },
+  ];
+
+  const customerLinks: FooterLink[] = [
+    { label: 'My Account', to: '/account' },
+    { label: 'Order Tracking', to: '/tracking' },
+    { label: 'FAQs', to: '/faq' },
+    { label: 'Returns', to: '/returns' },
+  ];
+
   return (
-    <div>
-      <footer className="">
-        <div className="mx-auto container max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <div className="text-foreground lg:flex lg:items-start lg:gap-8">
-            <Logo></Logo>
+    <footer className="bg-gray-900 text-white">
+      {/* Trust Badges */}
+      <div className="bg-green-800 py-4">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
+            <div className="flex flex-col items-center md:flex-row md:items-center gap-3">
+              <Truck className="text-white" size={28} />
+              <div>
+                <h3 className="font-bold">Free Delivery</h3>
+                <p className="text-sm text-green-100">On orders over $50</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center md:flex-row md:items-center gap-3">
+              <Sprout className="text-white" size={28} />
+              <div>
+                <h3 className="font-bold">100% Organic</h3>
+                <p className="text-sm text-green-100">Certified produce</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center md:flex-row md:items-center gap-3">
+              <Heart className="text-white" size={28} />
+              <div>
+                <h3 className="font-bold">Fresh Guarantee</h3>
+                <p className="text-sm text-green-100">Or your money back</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
-              {/* NEWS SECTION */}
-              <div className="col-span-2">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                  Get the latest news!
-                </h2>
-                <p className="mt-4 text-gray-500 dark:text-gray-400">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-1">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-green-400 mb-2">FreshHarvest</h2>
+              <p className="text-gray-300">
+                Delivering farm-fresh vegetables and premium spices directly to your doorstep.
+              </p>
+            </div>
+            
+            <div className="flex gap-4 mb-6">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-800 hover:bg-green-700 p-2 rounded-full transition-colors flex items-center justify-center w-10 h-10"
+                  aria-label={social.name}
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
+
+            {/* Newsletter */}
+            <div>
+              <h3 className="font-semibold mb-3">Subscribe to our newsletter</h3>
+              <form className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="flex-1 px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg font-medium transition-colors whitespace-nowrap"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+
+          {/* Quick Links Column */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Shop</h3>
+            <ul className="space-y-2">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link 
+                    to={link.to}
+                    className="text-gray-300 hover:text-green-400 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Column */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Company</h3>
+            <ul className="space-y-2">
+              {companyLinks.map((link) => (
+                <li key={link.label}>
+                  <Link 
+                    to={link.to}
+                    className="text-gray-300 hover:text-green-400 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Column */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Contact Us</h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <MapPin className="text-green-400 mt-1" size={18} />
+                <p className="text-gray-300">
+                  123 Farm Street<br />
+                  Green Valley, CA 90210
                 </p>
               </div>
-
-              {/* EMAIL FORM */}
-              <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
-                <form className="w-full">
-                  <label htmlFor="UserEmail" className="sr-only">
-                    Email
-                  </label>
-
-                  <div className="border border-gray-100 p-2 focus-within:ring-3 sm:flex sm:items-center sm:gap-4 dark:border-gray-800">
-                    <input
-                      type="email"
-                      id="UserEmail"
-                      placeholder="john@rhcp.com"
-                      className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm dark:bg-gray-900 dark:text-white"
-                    />
-
-                    <button className="mt-1 w-full bg-teal-500 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-teal-600 sm:mt-0 sm:w-auto sm:shrink-0">
-                      Sign Up
-                    </button>
-                  </div>
-                </form>
+              <div className="flex items-center gap-3">
+                <Phone className="text-green-400" size={18} />
+                <a href="tel:+15551234567" className="text-gray-300 hover:text-green-400">
+                  (555) 123-4567
+                </a>
               </div>
+              <div className="flex items-center gap-3">
+                <Mail className="text-green-400" size={18} />
+                <a href="mailto:info@freshharvest.com" className="text-gray-300 hover:text-green-400">
+                  info@freshharvest.com
+                </a>
+              </div>
+            </div>
 
-              {/* SECTIONS */}
-              {[
-                {
-                  title: "Services",
-                  links: [
-                    "1on1 Coaching",
-                    "Company Review",
-                    "Accounts Review",
-                    "HR Consulting",
-                    "SEO Optimisation",
-                  ],
-                },
-                {
-                  title: "Company",
-                  links: ["About", "Meet the Team", "Accounts Review"],
-                },
-                {
-                  title: "Helpful Links",
-                  links: ["Contact", "FAQs", "Live Chat"],
-                },
-                {
-                  title: "Legal",
-                  links: [
-                    "Accessibility",
-                    "Returns Policy",
-                    "Refund Policy",
-                    "Hiring-3 Statistics",
-                  ],
-                },
-                {
-                  title: "Downloads",
-                  links: ["Marketing Calendar", "SEO Infographics"],
-                },
-              ].map((section, idx) => (
-                <div key={idx} className="col-span-2 sm:col-span-1">
-                  <p className="font-medium text-gray-900 dark:text-white">
-                    {section.title}
-                  </p>
-
-                  <ul className="mt-6 space-y-4 text-sm">
-                    {section.links.map((link, i) => (
-                      <li key={i}>
-                        <a
-                          href="#"
-                          className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                        >
-                          {link}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-              {/* SOCIAL ICONS */}
-              <ul className="col-span-2 flex justify-start gap-6 lg:col-span-5 lg:justify-end">
-                {/* FACEBOOK */}
-                <li>
-                  <a
-                    href="#"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    <span className="sr-only">Facebook</span>
-                    <svg
-                      className="size-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-gray-700">Customer Care</h3>
+              <ul className="space-y-2">
+                {customerLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link 
+                      to={link.to}
+                      className="text-gray-300 hover:text-green-400 transition-colors"
                     >
-                      <path
-                        fillRule="evenodd"
-                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12..."
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* Instagram */}
-                <li>
-                  <a
-                    href="#"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    <span className="sr-only">Instagram</span>
-                    <svg
-                      className="size-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path fillRule="evenodd" d="..." clipRule="evenodd" />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* Twitter */}
-                <li>
-                  <a
-                    href="#"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    <span className="sr-only">Twitter</span>
-                    <svg
-                      className="size-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="..." />
-                    </svg>
-                  </a>
-                </li>
-
-                {/* GitHub */}
-                <li>
-                  <a
-                    href="#"
-                    rel="noreferrer"
-                    target="_blank"
-                    className="text-gray-700 transition hover:opacity-75 dark:text-gray-200"
-                  >
-                    <span className="sr-only">GitHub</span>
-                    <svg
-                      className="size-6"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path fillRule="evenodd" d="..." clipRule="evenodd" />
-                    </svg>
-                  </a>
-                </li>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-800 py-6">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} FreshHarvest. All rights reserved.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link to="/terms" className="text-gray-400 hover:text-white">
+                Terms of Service
+              </Link>
+              <Link to="/privacy" className="text-gray-400 hover:text-white">
+                Privacy Policy
+              </Link>
+              <Link to="/cookies" className="text-gray-400 hover:text-white">
+                Cookie Policy
+              </Link>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-400">
+              <span>Made with</span>
+              <Heart className="text-red-400" size={16} />
+              <span>for fresh food lovers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
-}
+};
 
 export default Footer;

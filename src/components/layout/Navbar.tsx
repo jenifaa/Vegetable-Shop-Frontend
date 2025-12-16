@@ -1,8 +1,34 @@
 import { useState } from "react";
 import logo from "/NextLevel/shop/shop-frontend/src/assets/icons/Logo2.png";
 import { Link } from "react-router";
+import {
+  authApi,
+  useLogoutMutation,
+  useUserInfoQuery,
+} from "@/redux/features/auth.api";
+import { Button } from "../ui/button";
+import { useAppDispatch } from "@/redux/hook";
+import { role } from "@/constants/role";
+
+const navigationLinks = [
+  { href: "/", label: "Home", role: "PUBLIC" },
+  { href: "/about", label: "About", role: "PUBLIC" },
+  { href: "/product", label: "Products", role: "PUBLIC" },
+  { href: "/admin", label: "Dashboard", role: role.admin },
+  // { href: "/admin", label: "Dashboard", role: role.superAdmin },
+  // { href: "/user", label: "Dashboard", role: role.user },
+];
+
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { data } = useUserInfoQuery(undefined);
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    logout(undefined);
+    dispatch(authApi.util.resetApiState());
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,10 +52,20 @@ const Navbar = () => {
             <a href="#" className="hover:text-green-400">
               Facts
             </a>
-            <Link to="/login" className="hover:text-green-400 font-semibold  border-b-4 rounded-md px-4 py-1 bg-green-600">
-             Login
-            </Link>
-            
+            {data?.data?.email && (
+              <Button onClick={handleLogout} variant="outline">
+                Logout
+              </Button>
+            )}
+
+            {!data?.data?.email && (
+              <Link
+                to="/login"
+                className="hover:text-green-400 font-semibold  border-b-4 rounded-md px-4 py-1 bg-green-600"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -42,36 +78,15 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex space-x-8">
-            <a
-              href="#"
-              className="text-gray-700 hover:text-green-600 font-medium"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-green-600 font-medium"
-            >
-              Shop
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-green-600 font-medium"
-            >
-              Blog
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-green-600 font-medium"
-            >
-              Pages
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 hover:text-green-600 font-medium"
-            >
-              Contact Us
-            </a>
+            {navigationLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.href}
+                className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
 
           <div className="flex-1 max-w-lg mx-4">
@@ -121,36 +136,16 @@ const Navbar = () => {
 
         {isDropdownOpen && (
           <div className="md:hidden mt-4 space-y-2">
-            <a
-              href="#"
-              className="block text-gray-700 hover:text-green-600 py-2"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="block text-gray-700 hover:text-green-600 py-2"
-            >
-              Shop
-            </a>
-            <a
-              href="#"
-              className="block text-gray-700 hover:text-green-600 py-2"
-            >
-              Blog
-            </a>
-            <a
-              href="#"
-              className="block text-gray-700 hover:text-green-600 py-2"
-            >
-              Pages
-            </a>
-            <a
-              href="#"
-              className="block text-gray-700 hover:text-green-600 py-2"
-            >
-              Contact Us
-            </a>
+            {navigationLinks.map((link, index) => (
+              <Link
+                key={index}
+                to={link.href}
+                className="block text-gray-700 hover:text-green-600 py-2"
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         )}
       </nav>
